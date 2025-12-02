@@ -2,74 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Quiz Game</title>
-    <link rel="shortcut icon" type="image/jpg" href="Images/favicon.PNG"/>
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <span id="logo">Math Quiz</span>
-    <div class="titlebar">
-        <div id="count">
-            <img src="https://image.flaticon.com/icons/svg/1277/1277603.svg"><span id="total">0</span>
-        </div>
-        <div id="count">
-            <img src="https://image.flaticon.com/icons/svg/1277/1277588.svg"><span id="correct">0</span>
-        </div>
-        <div id="count">
-            <img src="https://image.flaticon.com/icons/svg/1277/1277612.svg"><span id="wrong">0</span>
-        </div>
-    </div>
 
-    <div id="diff">
-        <h2>Select level</h2>
-        <button onclick="level(1)">Very Easy</button><br />
-        <button onclick="level(2)">Easy</button><br />
-        <button onclick="level(3)">Medium</button><br />
-        <button onclick="level(4)">Hard</button><br />
-        <button onclick="level(5)">Very Hard</button>
-        <div style="height:20px"></div>
-        <button style="height: 40px;width:220px" id="mode">Quick Mode (OFF)</button><button style="width:40px;height:40px" id="ex">?</button>
-    </div>
+    <main class="app-container">
+        <header class="game-header">
+            <h1 class="logo">Math<span class="highlight">Quiz</span></h1>
+            <div class="score-board">
+                <div class="score-item" title="Total Questions">
+                    <span class="label">Total</span>
+                    <span id="score-total" class="value">0</span>
+                </div>
+                <div class="score-item success" title="Correct Answers">
+                    <span class="label">Correct</span>
+                    <span id="score-correct" class="value">0</span>
+                </div>
+                <div class="score-item danger" title="Wrong Answers">
+                    <span class="label">Wrong</span>
+                    <span id="score-wrong" class="value">0</span>
+                </div>
+            </div>
+        </header>
 
-    <div id="quizbody">
-        <div style="height:10px"></div>
-        <div id='serial'><span>Question. </span><span id='no'>1</span></div>
-        <p id="question"></p>
+        <section id="menu-screen" class="screen active">
+            <h2>Select Difficulty</h2>
+            <div class="difficulty-grid">
+                <button class="btn btn-outline" data-level="1">Very Easy</button>
+                <button class="btn btn-outline" data-level="2">Easy</button>
+                <button class="btn btn-outline" data-level="3">Medium</button>
+                <button class="btn btn-outline" data-level="4">Hard</button>
+                <button class="btn btn-outline" data-level="5">Expert</button>
+            </div>
+            
+            <div class="options-row">
+                <button id="btn-quick-mode" class="btn btn-secondary">Quick Mode: OFF</button>
+                <button id="btn-info" class="btn btn-small" aria-label="Info">?</button>
+            </div>
+        </section>
 
-        <center><div id="timer">
-            <div id="bar"></div>
-        </div></center>
+        <section id="game-screen" class="screen hidden">
+            <div class="question-container">
+                <span class="q-label">Question <span id="q-number">1</span></span>
+                <div id="question-text" class="math-problem">Loading...</div>
+            </div>
 
-        <br />
-        <input id="answer" readonly>
-        <button id="del" style="width:45px;padding:5px;">←</button>
-        <br />
-        <button id="donebtn" onclick="check()">Done</button>
-        <div id="nums">     
-            <button onclick="ins(1)">1</button>
-            <button onclick="ins(2)">2</button>
-            <button onclick="ins(3)">3</button>
-            <button onclick="ins(4)">4</button>
-            <br />
-            <button onclick="ins(5)">5</button>
-            <button onclick="ins(6)">6</button>
-            <button onclick="ins(7)">7</button>
-            <button onclick="ins(8)">8</button>
-            <br />
-            <button onclick="ins(9)">9</button>
-            <button onclick="ins(0)">0</button>
-            <button onclick="ins('-')">-</button>
-            <button onclick="ins('.')">.</button>
-        </div>
-        <br />
-        <button id="res">Reset</button>
-    </div>
-        
+            <div class="timer-container">
+                <div id="timer-bar" class="timer-bar"></div>
+            </div>
+
+            <div class="input-area">
+                <input type="text" id="user-input" readonly placeholder="?">
+                <button id="btn-backspace" class="btn-icon">⌫</button>
+            </div>
+
+            <div class="numpad">
+                <button class="num-btn" data-val="1">1</button>
+                <button class="num-btn" data-val="2">2</button>
+                <button class="num-btn" data-val="3">3</button>
+                <button class="num-btn" data-val="4">4</button>
+                <button class="num-btn" data-val="5">5</button>
+                <button class="num-btn" data-val="6">6</button>
+                <button class="num-btn" data-val="7">7</button>
+                <button class="num-btn" data-val="8">8</button>
+                <button class="num-btn" data-val="9">9</button>
+                <button class="num-btn" data-val="-">-</button>
+                <button class="num-btn" data-val="0">0</button>
+                <button class="num-btn" data-val=".">.</button>
+            </div>
+
+            <div class="action-row">
+                <button id="btn-reset" class="btn btn-text">Quit</button>
+                <button id="btn-submit" class="btn btn-primary">Submit</button>
+            </div>
+        </section>
+    </main>
+
     <script src="script.js"></script>
-    
 </body>
 </html>

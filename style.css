@@ -1,112 +1,187 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-body {
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    background: linear-gradient(90deg, rgba(13,120,207,1) 19%, rgba(18,182,231,1) 93%);
-    color:white;
-}
-#question {
-    font-size: 40px;
-    font-weight: bold;
-}
-button, input {
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    
-}
-input {
-    height: 42px;
-    font-size: 30px;
-    width: 150px;
-    text-align: center;
-    color: rgba(13,120,207,1);
-    border: 2px solid white;
-    margin: 8px;
-    border-radius: 10px;
-}
-#quizbody button {
-    width: 100px;
-    height: 50px;
-    margin: 8px;
-    font-size: 22px;
-    background-color: transparent;
-    color: white;
-    font-weight: bold;
-    border: 2px solid white;
-    border-radius: 15px;
-}
-#serial {
-    font-size: 22px;
-    font-weight: bold;
-}
-#diff button {
-    width: 180px;
-    height: 50px;
-    margin: 8px;
-    font-size: 21px;
-    background-color: transparent;
-    color: white;
-    font-weight: bolder;
-    border: 2px solid white;
-    border-radius: 10px;
+:root {
+    --primary: #4e54c8;
+    --primary-dark: #3f44a5;
+    --accent: #8f94fb;
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --surface: #ffffff;
+    --text: #333333;
+    --text-light: #777777;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --shadow: 0 10px 20px rgba(0,0,0,0.1);
+    --radius: 16px;
 }
 
-#result {
-    font-size: 25px;
-    font-weight: bold;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.titlebar {
-    margin: 10px;
+
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
 }
-.titlebar img {
-    height: 25px;
-    width: 25px;
-    float:left;
-    padding-top: 7px;
-}
-#count {
-    padding: 2px;
-    background-color: white;
-    margin: 2px;
-    color: rgba(13,120,207,1);
-    border-radius: 10px;
-    width: 65px;
-    display: inline-block;
-    height: 35px;
-    text-align:right;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    background-color: #dbdbdb;
-    font-weight: bold;
-}
-#count span {
-    font-size: 27px;
-    font-weight: bold;
-}
-#logo {
-    font-size: 30px;
-    font-weight: bold;
-}
-#nums button {
-    height: 44px;
-    width: 44px;
-    font-size: 23px;
-}
-#timer, #bar {
-    height: 10px;
-    width: 220px;
-}
-#timer {
-    background-color: transparent;
-    border: 1px solid white;
-}
-#bar {
-    background-color: white;
+
+.app-container {
+    background: var(--surface);
+    width: 90%;
+    max-width: 400px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    padding: 2rem;
     position: relative;
-    float: left;
 }
-input:focus, button:focus {
-    outline: 0;
-    outline-color: transparent;
-    outline-style: none;
+
+/* Header & Score */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
 }
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.highlight { color: var(--primary); }
+
+.score-board {
+    display: flex;
+    gap: 10px;
+    font-size: 0.85rem;
+}
+
+.score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+}
+.score-item.success { color: var(--success); }
+.score-item.danger { color: var(--danger); }
+.score-item .label { font-size: 0.6rem; text-transform: uppercase; color: var(--text-light); }
+
+/* Screens (Menu vs Game) */
+.screen { display: none; animation: fadeIn 0.3s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Menu Styles */
+h2 { text-align: center; margin-bottom: 1.5rem; color: var(--primary); }
+
+.difficulty-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.options-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn {
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+.btn-outline:hover { background: var(--primary); color: white; }
+
+.btn-primary { background: var(--primary); color: white; width: 100%; }
+.btn-primary:hover { background: var(--primary-dark); }
+
+.btn-secondary { background: #eee; color: var(--text-light); flex-grow: 1; }
+.btn-secondary.active { background: var(--accent); color: white; }
+
+.btn-text { background: transparent; color: var(--text-light); }
+.btn-text:hover { color: var(--danger); }
+
+/* Game Area */
+.question-container { text-align: center; margin-bottom: 1rem; }
+.q-label { font-size: 0.8rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+.math-problem { font-size: 2.5rem; font-weight: 700; margin-top: 5px; color: var(--text); }
+
+/* Timer */
+.timer-container {
+    width: 100%;
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+.timer-bar {
+    height: 100%;
+    background: var(--primary);
+    width: 100%;
+    transition: width 0.1s linear;
+}
+
+/* Inputs */
+.input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+#user-input {
+    flex-grow: 1;
+    font-size: 1.5rem;
+    padding: 10px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    text-align: center;
+    color: var(--primary);
+    font-weight: bold;
+    outline: none;
+}
+.btn-icon {
+    background: #eee;
+    border: none;
+    width: 50px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.btn-icon:hover { background: #ddd; }
+
+/* Numpad */
+.numpad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns for +, -, *, etc layout */
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+.num-btn {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 15px 0;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+.num-btn:active { transform: scale(0.95); background: #e2e6ea; }
+
+.action-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
